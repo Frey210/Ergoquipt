@@ -119,6 +119,7 @@ sequenceDiagram
 
 ### ESP32 Server
 ![ESP32 Server Connections](docs/images/esp32-server.jpg)
+
 Pin configuration untuk ESP32 Server:
 - LED Merah: GPIO 19
 - LED Kuning: GPIO 18  
@@ -128,6 +129,7 @@ Pin configuration untuk ESP32 Server:
 
 ### ESP32 Client 1
 ![ESP32 Client 1 Connections](docs/images/esp32-client1.jpg)
+
 Pin configuration untuk ESP32 Client 1:
 - Button Merah: GPIO 5
 - Button Kuning: GPIO 18
@@ -137,6 +139,7 @@ Pin configuration untuk ESP32 Client 1:
 
 ### ESP32 Client 2
 ![ESP32 Client 2 Connections](docs/images/esp32-client2.jpg)
+
 Pin configuration untuk ESP32 Client 2:
 - Visual Button: GPIO 32
 
