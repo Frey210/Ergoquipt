@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Time Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --secondary: #2c3e50;
+            --secondary-light: #34495e;
+            --accent: #e74c3c;
+            --accent-dark: #c0392b;
+            --success: #2ecc71;
+            --success-dark: #27ae60;
+            --warning: #f39c12;
+            --visual: #3498db;
+            --visual-dark: #2980b9;
+            --text: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg: #ecf0f1;
+            --card-bg: #ffffff;
+            --border: #ddd;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .device-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .device-id {
+            background-color: var(--secondary);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            margin-right: 8px;
+        }
+
+        .status-dot.connected {
+            background-color: var(--success);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: var(--text-light);
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .tab.visual-active {
+            color: var(--visual);
+            border-bottom: 3px solid var(--visual);
+            background-color: rgba(155, 89, 182, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .dropdown {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background-color: var(--card-bg);
+            font-size: 16px;
+            margin-bottom: 15px;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background-color: var(--accent-dark);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: var(--success-dark);
+        }
+
+        .btn-visual {
+            background-color: var(--visual);
+            color: white;
+        }
+
+        .btn-visual:hover {
+            background-color: var(--visual-dark);
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .btn-lg {
+            padding: 15px 25px;
+            font-size: 18px;
+        }
+
+        .measurement {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .attempts {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .time {
+            font-size: 42px;
+            font-weight: bold;
+            color: var(--accent);
+            margin: 15px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-buttons .btn {
+            flex: 1;
+        }
+
+        /* LED BUTTONS MODIFICATION: Tetap horizontal 3 kolom pada layar kecil */
+        .led-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .led-btn {
+            aspect-ratio: 1;
+            border-radius: 12px;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px; /* Tinggi minimum untuk memastikan konsistensi */
+        }
+
+        .led-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .led-btn:active {
+            transform: translateY(0);
+        }
+
+        .led-btn.red {
+            background-color: #e74c3c;
+        }
+
+        .led-btn.yellow {
+            background-color: #f1c40f;
+        }
+
+        .led-btn.blue {
+            background-color: #3498db;
+        }
+
+        .reset-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .btn-reset {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background-color: var(--secondary-light);
+        }
+
+        .export-btn {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .export-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--text-light);
+            margin-left: 5px;
+        }
+
+        .indicator.on {
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .indicator.sound {
+            color: var(--primary);
+        }
+
+        .indicator.led {
+            color: var(--accent);
+        }
+
+        .indicator.visual {
+            color: var(--visual);
+        }
+
+        .visual-description {
+            background-color: rgba(155, 89, 182, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+            color: var(--text);
+            border-left: 4px solid var(--visual);
+        }
+
+        .visual-description p {
+            margin-bottom: 10px;
+        }
+
+        .visual-description ul {
+            padding-left: 20px;
+        }
+
+        .visual-description li {
+            margin-bottom: 5px;
+        }
+
+        /* Modal styles for data export */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .close-btn:hover {
+            color: var(--accent);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table th {
+            background-color: rgba(52, 152, 219, 0.1);
+            font-weight: 600;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .export-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .export-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .export-filter label {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .empty-data {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .stats-info {
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .stats-info p {
+            margin: 5px 0;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            
+            .header {
+                /* flex-direction: column; */
+                display: flex;
+                overflow: hidden;
+                /* align-items: flex-start; */
+                gap: 10px;
+            }
+            
+            .device-info {
+                /* flex-direction: column; */
+                /* align-items: flex-start; */
+                display: flex;
+                overflow: hidden;
+                gap: 10px;
+            }
+            
+            .action-buttons {
+                /* flex-direction: column; */
+            }
+            
+            /* LED BUTTONS MODIFICATION: Tetap 3 kolom pada layar kecil */
+            .led-buttons {
+                grid-template-columns: repeat(3, 1fr); /* Tetap 3 kolom */
+                gap: 8px; /* Mengurangi gap sedikit */
+            }
+            
+            .led-btn {
+                font-size: 16px; /* Sedikit lebih kecil pada mobile */
+                min-height: 50px; /* Tinggi minimum lebih kecil pada mobile */
+            }
+            
+            /* NAV-TABS MODIFICATION: Remove column direction and adjust for small screens */
+            .nav-tabs {
+                /* Remove flex-direction: column; */
+                overflow-x: auto; /* Allow horizontal scrolling if needed */
+                -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            }
+            
+            .tab {
+                padding: 12px 8px; /* Reduce padding on small screens */
+                font-size: 14px; /* Slightly smaller font on mobile */
+            }
+
+            .data-table {
+                font-size: 14px;
+            }
+
+            .data-table th, .data-table td {
+                padding: 8px 6px;
+            }
+
+            .export-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Additional media query for very small screens */
+        @media (max-width: 350px) {
+            .tab {
+                padding: 10px 6px;
+                font-size: 13px;
+            }
+            
+            /* LED BUTTONS MODIFICATION: Tetap 3 kolom bahkan di layar sangat kecil */
+            .led-buttons {
+                grid-template-columns: repeat(3, 1fr); /* Tetap 3 kolom */
+                gap: 6px; /* Gap lebih kecil */
+            }
+            
+            .led-btn {
+                font-size: 14px; /* Lebih kecil pada layar sangat kecil */
+                min-height: 45px; /* Tinggi minimum lebih kecil */
+                border-radius: 8px; /* Border radius lebih kecil */
+            }
+
+            .data-table {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Reaction Time Test</h1>
+        <button class="export-btn" id="btnExport">Data Export</button>
+    </div>
+    
+    <div class="device-info">
+        <div class="device-id">Device ID: EQRT2501</div>
+        <div class="connection-status">
+            <div class="status-dot" id="statusDot"></div>
+            <span id="connectionStatus">Disconnected</span>
+        </div>
+    </div>
+    
+    <div class="nav-tabs">
+        <div class="tab active" data-tab="sound">Sound Mode</div>
+        <div class="tab" data-tab="led">LED Mode</div>
+        <div class="tab" data-tab="visual">Visual Mode</div>
+    </div>
+    
+    <!-- Sound Mode Content -->
+    <div class="tab-content active" id="soundTab">
+        <div class="card">
+            <div class="card-title">
+                Sound Mode
+                <span class="indicator sound" id="soundIndicator"></span>
+            </div>
+            
+            <select class="dropdown" id="soundSelect">
+                <option value="siren">Sirine</option>
+                <option value="ambulance">Ambulance</option>
+            </select>
+            
+            <button class="btn btn-primary btn-full btn-lg" id="btnPlaySound">
+                <i class="fas fa-play"></i> Play Sound
+            </button>
+        </div>
+    </div>
+    
+    <!-- LED Mode Content -->
+    <div class="tab-content" id="ledTab">
+        <div class="card">
+            <div class="card-title">
+                LED Mode
+                <span class="indicator led" id="ledIndicator"></span>
+            </div>
+            
+            <div class="led-buttons">
+                <button class="led-btn red" data-color="red">1</button>
+                <button class="led-btn yellow" data-color="yellow">2</button>
+                <button class="led-btn blue" data-color="blue">3</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Visual Mode Content (UPDATED) -->
+    <div class="tab-content" id="visualTab">
+        <div class="card">
+            <div class="card-title">
+                Visual Mode
+                <span class="indicator visual" id="visualIndicator"></span>
+            </div>
+            
+            <!-- Dropdown untuk memilih jenis visual (seperti Sound Mode) -->
+            <select class="dropdown" id="visualSelect">
+                <option value="gauge">Gauge Meter</option>
+                <option value="spectrum">Spectrum Analyzer</option>
+            </select>
+            
+            <!-- Tombol start (seperti Sound Mode) -->
+            <button class="btn btn-visual btn-full btn-lg" id="btnStartVisual">
+                <i class="fas fa-play"></i> Start Visual Test
+            </button>
+            
+            <!-- <div class="visual-description">
+                <p><strong>Instruksi Mode Visual:</strong></p>
+                <ul>
+                    <li>Pilih jenis visual test dari dropdown</li>
+                    <li>Klik tombol "Start Visual Test" untuk memulai</li>
+                    <li>Visual indicator akan muncul pada layar TFT Arduino</li>
+                    <li>Tekan tombol pada ESP32 Client 2 ketika indicator mencapai target</li>
+                    <li>Waktu reaksi akan diukur dan ditampilkan</li>
+                </ul>
+            </div> -->
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">Reaction Time Measurement</div>
+        
+        <div class="measurement">
+            <div class="attempts" id="attemptCount">0X</div>
+            <div class="time" id="reactionTime">0ms</div>
+            <!-- <div id="measurementType">Sound: Siren</div> -->
+        </div>
+        
+        <div class="action-buttons">
+            <button class="btn btn-accent" id="btnRetry">Retry</button>
+            <button class="btn btn-success" id="btnRecord">Record</button>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">Remote Button</div>
+        <div class="reset-container">
+            <button class="btn btn-reset" id="btnReset">Reset Data</button>
+        </div>
+    </div>
+
+    <!-- Modal for data export -->
+    <div class="modal" id="exportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Data Export</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            
+            <div id="exportDataContent">
+                <!-- Data will be populated here by JavaScript -->
+            </div>
+            
+            <div class="export-filter">
+                <label for="exportFilter">Filter berdasarkan Mode Test:</label>
+                <select class="dropdown" id="exportFilter">
+                    <option value="all">Semua Data</option>
+                    <option value="sound">Sound Mode</option>
+                    <option value="led">LED Mode</option>
+                    <option value="visual">Visual Mode</option>
+                </select>
+            </div>
+            
+            <div class="export-actions">
+                <button class="btn btn-primary" id="btnDownloadCSV">Download CSV</button>
+                <button class="btn btn-accent" id="btnCloseModal">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // WebSocket connection
+        var ws = null;
+        let testCount = 0;
+        let activeTests = 0;
+        let currentMode = "sound"; // Default mode
+        
+        // Data storage for session
+        let sessionData = JSON.parse(sessionStorage.getItem('reactionTestData')) || [];
+        
+        // Initialize WebSocket connection
+        function connectWebSocket() {
+            try {
+                ws = new WebSocket("ws://192.168.4.1:81/");
+                
+                ws.onopen = function() {
+                    document.getElementById("connectionStatus").textContent = "Connected";
+                    document.getElementById("statusDot").classList.add("connected");
+                    console.log("WebSocket connected");
+                };
+                
+                ws.onmessage = function(event) {
+                    var message = event.data;
+                    console.log("Received:", message);
+                    
+                    if(message.startsWith("RESPONSE_TIME:")) {
+                        var parts = message.split(":");
+                        var time = parts[1];
+                        var category = parts[2];
+                        var type = parts[3];
+                        
+                        document.getElementById("reactionTime").textContent = time + "ms";
+                        activeTests++;
+                        
+                        // Update test count
+                        testCount++;
+                        document.getElementById("attemptCount").textContent = testCount + "X";
+                        
+                        // Update measurement type
+                        const testTypeDisplay = category.charAt(0).toUpperCase() + category.slice(1) + ": " + type;
+                        document.getElementById("measurementType").textContent = testTypeDisplay;
+                        
+                        // Save data to session
+                        const testData = {
+                            attempt: testCount,
+                            responseTime: time + "ms",
+                            testType: testTypeDisplay,
+                            testCategory: category,
+                            timestamp: new Date().toLocaleString()
+                        };
+                        
+                        sessionData.push(testData);
+                        sessionStorage.setItem('reactionTestData', JSON.stringify(sessionData));
+                        
+                        // Turn off indicators
+                        document.getElementById("soundIndicator").classList.remove("on");
+                        document.getElementById("ledIndicator").classList.remove("on");
+                        document.getElementById("visualIndicator").classList.remove("on");
+                        
+                        document.getElementById("connectionStatus").textContent = 
+                            "Response received: " + time + "ms for " + category + ": " + type;
+                    } 
+                    else if(message.startsWith("LED_ON:")) {
+                        var color = message.split(":")[1];
+                        document.getElementById("ledIndicator").classList.add("on");
+                        document.getElementById("connectionStatus").textContent = 
+                            "LED " + color.toUpperCase() + " is ON - Waiting for response...";
+                    }
+                    else if(message.startsWith("SOUND_ON:")) {
+                        var sound = message.split(":")[1];
+                        document.getElementById("soundIndicator").classList.add("on");
+                        document.getElementById("connectionStatus").textContent = 
+                            "Sound " + sound.toUpperCase() + " is ON - Waiting for response...";
+                    }
+                    else if(message.startsWith("VISUAL_ON:")) {
+                        var visualType = message.split(":")[1];
+                        document.getElementById("visualIndicator").classList.add("on");
+                        document.getElementById("connectionStatus").textContent = 
+                            "Visual " + visualType.toUpperCase() + " is ACTIVE - Waiting for response...";
+                    }
+                    else if(message === "RESET:DONE") {
+                        document.getElementById("soundIndicator").classList.remove("on");
+                        document.getElementById("ledIndicator").classList.remove("on");
+                        document.getElementById("visualIndicator").classList.remove("on");
+                        document.getElementById("connectionStatus").textContent = "System reset";
+                    }
+                    else if(message.startsWith("RESPONSE_TIMEOUT:")) {
+                        var parts = message.split(":");
+                        var category = parts[1];
+                        var type = parts[2];
+                        
+                        if (category === "visual") {
+                            document.getElementById("visualIndicator").classList.remove("on");
+                            document.getElementById("connectionStatus").textContent = 
+                                "RESPONSE TIMEOUT for " + type;
+                            alert("Waktu habis! Button tidak ditekan tepat waktu.");
+                        }
+                    }
+                };
+                
+                ws.onclose = function() {
+                    document.getElementById("connectionStatus").textContent = "Disconnected";
+                    document.getElementById("statusDot").classList.remove("connected");
+                    console.log("WebSocket disconnected");
+                    
+                    // Try to reconnect after 3 seconds
+                    setTimeout(connectWebSocket, 3000);
+                };
+                
+                ws.onerror = function(error) {
+                    console.log("WebSocket error:", error);
+                };
+            } catch (error) {
+                console.log("WebSocket connection error:", error);
+                setTimeout(connectWebSocket, 3000);
+            }
+        }
+        
+        // Function to filter data based on selected mode
+        function filterDataByMode(mode) {
+            if (mode === 'all') {
+                return sessionData;
+            }
+            
+            return sessionData.filter(item => item.testCategory === mode);
+        }
+        
+        // Function to calculate statistics
+        function calculateStats(data) {
+            if (data.length === 0) return null;
+            
+            const times = data.map(item => parseInt(item.responseTime));
+            const sum = times.reduce((a, b) => a + b, 0);
+            const avg = Math.round(sum / times.length);
+            const min = Math.min(...times);
+            const max = Math.max(...times);
+            
+            return {
+                count: data.length,
+                average: avg,
+                min: min,
+                max: max
+            };
+        }
+        
+        // Function to show export data modal
+        function showExportModal() {
+            const modal = document.getElementById('exportModal');
+            const content = document.getElementById('exportDataContent');
+            const filter = document.getElementById('exportFilter');
+            
+            // Set filter to 'all' by default
+            filter.value = 'all';
+            
+            if (sessionData.length === 0) {
+                content.innerHTML = '<div class="empty-data">Tidak ada data yang tersimpan untuk sesi ini.</div>';
+            } else {
+                updateExportDataDisplay('all');
+            }
+            
+            modal.style.display = 'flex';
+        }
+        
+        // Function to update the displayed data based on filter
+        function updateExportDataDisplay(filterMode) {
+            const content = document.getElementById('exportDataContent');
+            const filteredData = filterDataByMode(filterMode);
+            
+            if (filteredData.length === 0) {
+                content.innerHTML = `<div class="empty-data">Tidak ada data untuk mode ${filterMode === 'all' ? 'yang dipilih' : filterMode}.</div>`;
+                return;
+            }
+            
+            // Calculate statistics
+            const stats = calculateStats(filteredData);
+            
+            let tableHTML = '';
+            
+            if (stats) {
+                tableHTML = `
+                    <div class="stats-info">
+                        <p><strong>Statistik:</strong></p>
+                        <p>Jumlah Data: ${stats.count}</p>
+                        <p>Rata-rata Waktu: ${stats.average}ms</p>
+                        <p>Waktu Tercepat: ${stats.min}ms</p>
+                        <p>Waktu Terlama: ${stats.max}ms</p>
+                    </div>
+                `;
+            }
+            
+            tableHTML += `
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Attempt</th>
+                            <th>Response Time</th>
+                            <th>Test Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            filteredData.forEach((data, index) => {
+                tableHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${data.attempt}</td>
+                        <td>${data.responseTime}</td>
+                        <td>${data.testType}</td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `
+                    </tbody>
+                </table>
+                <p>Total data: ${filteredData.length}</p>
+            `;
+            
+            content.innerHTML = tableHTML;
+        }
+        
+        // Function to download CSV
+        function downloadCSV() {
+            const filterMode = document.getElementById('exportFilter').value;
+            const filteredData = filterDataByMode(filterMode);
+            
+            if (filteredData.length === 0) {
+                alert('Tidak ada data untuk diunduh.');
+                return;
+            }
+            
+            let csvContent = "No,Attempt,Response Time,Test Type\n";
+            
+            filteredData.forEach((data, index) => {
+                csvContent += `${index + 1},${data.attempt},${data.responseTime},${data.testType}\n`;
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            const date = new Date().toISOString().slice(0, 10);
+            const modeText = filterMode === 'all' ? 'all' : filterMode;
+            
+            link.setAttribute("href", url);
+            link.setAttribute("download", `reaction_test_${modeText}_${date}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Initialize the application
+        function initApp() {
+            // Connect to WebSocket
+            connectWebSocket();
+            
+            // Tab navigation
+            document.querySelectorAll(".tab").forEach(tab => {
+                tab.addEventListener("click", function() {
+                    const tabId = this.getAttribute("data-tab");
+                    
+                    // Update active tab
+                    document.querySelectorAll(".tab").forEach(t => {
+                        t.classList.remove("active");
+                        t.classList.remove("visual-active");
+                    });
+                    
+                    this.classList.add("active");
+                    if (tabId === "visual") {
+                        this.classList.add("visual-active");
+                    }
+                    
+                    // Show corresponding content
+                    document.querySelectorAll(".tab-content").forEach(content => {
+                        content.classList.remove("active");
+                    });
+                    document.getElementById(tabId + "Tab").classList.add("active");
+                    
+                    currentMode = tabId;
+                });
+            });
+            
+            // Sound mode button
+            document.getElementById("btnPlaySound").addEventListener("click", function() {
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    const soundType = document.getElementById("soundSelect").value;
+                    ws.send(soundType);
+                }
+            });
+            
+            // LED mode buttons
+            document.querySelectorAll(".led-btn").forEach(btn => {
+                btn.addEventListener("click", function() {
+                    if (ws && ws.readyState === WebSocket.OPEN) {
+                        const color = this.getAttribute("data-color");
+                        ws.send(color);
+                    }
+                });
+            });
+            
+            // Visual mode button (UPDATED)
+            document.getElementById("btnStartVisual").addEventListener("click", function() {
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    const visualType = document.getElementById("visualSelect").value;
+                    ws.send(visualType);
+                }
+            });
+            
+            // Retry button
+            document.getElementById("btnRetry").addEventListener("click", function() {
+                document.getElementById("reactionTime").textContent = "0ms";
+            });
+            
+            // Record button
+            document.getElementById("btnRecord").addEventListener("click", function() {
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    if (currentMode === "sound") {
+                        const soundType = document.getElementById("soundSelect").value;
+                        ws.send(soundType);
+                    } else if (currentMode === "led") {
+                        const colors = ["red", "yellow", "blue"];
+                        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                        ws.send(randomColor);
+                    } else if (currentMode === "visual") {
+                        const visualType = document.getElementById("visualSelect").value;
+                        ws.send(visualType);
+                    }
+                }
+            });
+            
+            // Reset button
+            document.getElementById("btnReset").addEventListener("click", function() {
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send("reset");
+                    document.getElementById("reactionTime").textContent = "0ms";
+                    document.getElementById("measurementType").textContent = "Sound: Siren";
+                    testCount = 0;
+                    document.getElementById("attemptCount").textContent = "0X";
+                    
+                    // Clear session data
+                    sessionData = [];
+                    sessionStorage.removeItem('reactionTestData');
+                }
+            });
+            
+            // Export button - show modal
+            document.getElementById("btnExport").addEventListener("click", showExportModal);
+            
+            // Close modal button
+            document.getElementById("closeModal").addEventListener("click", function() {
+                document.getElementById("exportModal").style.display = "none";
+            });
+            
+            // Close modal button (alternative)
+            document.getElementById("btnCloseModal").addEventListener("click", function() {
+                document.getElementById("exportModal").style.display = "none";
+            });
+            
+            // Download CSV button
+            document.getElementById("btnDownloadCSV").addEventListener("click", downloadCSV);
+            
+            // Filter change event
+            document.getElementById("exportFilter").addEventListener("change", function() {
+                updateExportDataDisplay(this.value);
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener("click", function(event) {
+                const modal = document.getElementById("exportModal");
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        }
+        
+        // Start the app when the DOM is loaded
+        document.addEventListener("DOMContentLoaded", initApp);
+    </script>
+</body>
+</html>
