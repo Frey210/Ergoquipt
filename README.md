@@ -140,6 +140,30 @@ Pin configuration untuk ESP32 Client 1:
 Pin configuration untuk ESP32 Client 2:
 - Visual Button: GPIO 32
 
+## 📱 Preview Aplikasi Web
+
+Berikut adalah tampilan antarmuka web yang digunakan untuk mengontrol sistem:
+
+### Tampilan Splash Screen
+![Sound Mode](docs/images/app_preview1.png)
+*Branding*
+
+### LED Mode
+![LED Mode](docs/images/app_preview4.png)
+*Mode LED - untuk menguji respons terhadap stimulus visual LED*
+
+### Sound Mode
+![Mobile View](docs/images/app_preview5.png)
+*Mode Sound - untuk menguji respons terhadap stimulus sound*
+
+### Visual Mode
+![Visual Mode](docs/images/app_preview3.png)
+*Mode Visual - untuk menguji respons terhadap stimulus visual complex*
+
+### Data Export
+![Data Export](docs/images/app_preview2.png)
+*Fitur export data untuk analisis hasil pengujian*
+
 ## 🚀 Instalasi dan Penggunaan
 
 ### 1. Klon Repository
@@ -237,7 +261,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 👥 Tim Pengembang
 
-- [Nama Anda] - [Role] - [Kontak]
+- [Fariz] - [Fullstack_Engineer] - [frzxx210@gmail.com]
 
 ## ❓ Dukungan
 
