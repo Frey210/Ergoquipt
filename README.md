@@ -19,7 +19,7 @@ Sistem pengukur waktu reaksi profesional yang terdiri dari multiple ESP32, Ardui
 3. **ESP32 Client 2** - IP: 192.168.4.11 (1 push button visual)
 4. **Arduino Uno dengan TFT Shield** - Komunikasi serial dengan ESP32 Server
 
-## 🔄 Flowchart Sistem Lengkap
+## 🔄 Flowchart Sistem
 
 ```mermaid
 flowchart TD
